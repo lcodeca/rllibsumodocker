@@ -126,7 +126,7 @@ if [[ "$RUN" = true ]]; then
     CURR_UID=$(id -u)
     CURR_GID=$(id -g)
     RUN_OPT="-u $CURR_UID:$CURR_GID --net=host --env DISPLAY=$DISPLAY \
-            --volume $XAUTHORITY:/home/dkr-user/.Xauthority --volume /tmp/.X11-unix:/tmp/.X11-unix \
+            --volume $XAUTHORITY:/home/alice/.Xauthority --volume /tmp/.X11-unix:/tmp/.X11-unix \
             --privileged $MOUNT_DEVEL $MOUNT_LEARN --shm-size 256m $GPU_OPT \
             -it --rm $IMAGE_NAME:latest"
     echo "$OPTIRUN_OPT docker run $RUN_OPT $COMMAND"
