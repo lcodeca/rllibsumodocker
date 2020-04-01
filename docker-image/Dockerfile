@@ -3,6 +3,9 @@ FROM tensorflow/tensorflow:latest-gpu-py3
 LABEL Author="Lara CODECA (lara.codeca@gmail.com)"
 LABEL Description="Dockerised SUMO-devel with tensorflow-gpu environment."
 
+ARG USER_ID
+ARG GROUP_ID
+
 # Install system dependencies.
 RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     cmake \
@@ -64,7 +67,9 @@ RUN python -m pip install ray[rllib]
 RUN python -m pip install ray[tune]
 
 # Working user
-RUN useradd -ms /bin/bash alice && echo "alice:alice" | chpasswd && adduser alice sudo
+RUN groupadd --gid ${GROUP_ID} alice && \
+    useradd -m -s /bin/bash -u ${USER_ID} -g ${GROUP_ID} alice && \
+    echo "alice:alice" | chpasswd && adduser alice sudo
 USER alice
 
 # Download and install SUMO

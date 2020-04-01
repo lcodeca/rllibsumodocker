@@ -100,10 +100,16 @@ print_help
 if [[ "$BUILD" = true ]]; then
     if [[ "$CACHE" = true ]]; then
         echo "Building the docker container using the cache, if present."
-        $OPTIRUN_OPT docker build -t "$IMAGE_NAME" "$IMAGE_FOLDER"
+        $OPTIRUN_OPT docker build \
+            --build-arg USER_ID=$(id -u ${USER}) \
+            --build-arg GROUP_ID=$(id -g ${USER}) \
+            -t "$IMAGE_NAME" "$IMAGE_FOLDER"
     else
         echo "Building the docker container ignoring the cache, even if present."
-        $OPTIRUN_OPT docker build --no-cache -t "$IMAGE_NAME" "$IMAGE_FOLDER"
+        $OPTIRUN_OPT docker build \
+            --build-arg USER_ID=$(id -u ${USER}) \
+            --build-arg GROUP_ID=$(id -g ${USER}) \
+            --no-cache -t "$IMAGE_NAME" "$IMAGE_FOLDER"
     fi
 fi
 
