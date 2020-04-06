@@ -26,7 +26,7 @@ DEVEL_DIR=""
 LEARN_DIR=""
 COMMAND=""
 EXP=""
-DETACH=true
+DETACH=false
 
 function print_help {
     echo "Parameters:"
