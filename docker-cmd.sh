@@ -26,6 +26,7 @@ DEVEL_DIR=""
 LEARN_DIR=""
 COMMAND=""
 EXP=""
+DETACH=true
 
 function print_help {
     echo "Parameters:"
@@ -38,6 +39,7 @@ function print_help {
     echo "  EXEC: $EXEC [-e, --exec], CONTAINER: \"$CONTAINER\" (use docker ps for the id)"
     echo "  COMMAND: \"$COMMAND\" [--cmd]"
     echo "  EXP: \"$EXP\" [--exp]"
+    echo "  DETACH: ($DETACH) [--detach]"
     echo "  DEVELOPMENT dir \"$DEVEL_DIR\" [-d, --devel]"
     echo "  LEARNING dir \"$LEARN_DIR\" [-l, --learn]"
 }
@@ -58,6 +60,9 @@ do
         --with-optirun)
         OPTIRUN=true
         OPTIRUN_OPT="optirun"
+        ;;
+        --detach)
+        DETACH=true
         ;;
         -b|--build)
         BUILD=true
@@ -132,6 +137,11 @@ if [[ "$RUN" = true ]]; then
     if [[ $EXP ]]; then
         CONT_NAME="--name $EXP"
     fi
+    if [[ "$DETACH" = true ]]; then
+        DETACH="-d"
+    else
+        DETACH=""
+    fi
     CURR_UID=$(id -u)
     CURR_GID=$(id -g)
     RUN_OPT="-u $CURR_UID:$CURR_GID --net=host --env DISPLAY=$DISPLAY \
@@ -139,7 +149,7 @@ if [[ "$RUN" = true ]]; then
             --volume /tmp/.X11-unix:/tmp/.X11-unix \
             --privileged $MOUNT_DEVEL $MOUNT_LEARN \
             --shm-size 256m $GPU_OPT $CONT_NAME \
-            -it --rm $IMAGE_NAME:latest"
+            -it $DETACH --rm $IMAGE_NAME:latest"
     echo "$OPTIRUN_OPT docker run $RUN_OPT $COMMAND"
 
     ## Running docker
