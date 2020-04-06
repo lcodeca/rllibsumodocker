@@ -21,12 +21,14 @@ Default parameters:
   GPU enabled (true)                    [--no-gpu]
   OPTIRUN disabled (false)              [--with-optirun]
   BUILD: false                          [-b, --build]
-         with CACHE: false              [-c, --cache]
+        with CACHE: false               [-c, --cache]
   RUN: false                            [-r, --run]
-         with SCREEN: false             [-s, --screen]
+        with SCREEN: false              [-s, --screen]
   EXEC: false                           [-e, --exec]
-         CONTAINER: "" (use docker ps for the id)
+        CONTAINER: "" (use docker ps for the id)
   COMMAND: ""                           [--cmd]
+  EXP: ""                               [--exp]
+  DETACH: (true)                        [--detach]
   DEVELOPMENT dir ""                    [-d, --devel]
   LEARNING dir ""                       [-l, --learn]
 ```
