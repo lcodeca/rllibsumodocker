@@ -25,6 +25,7 @@ CONTAINER=""
 DEVEL_DIR=""
 LEARN_DIR=""
 COMMAND=""
+EXP=""
 
 function print_help {
     echo "Parameters:"
@@ -36,6 +37,7 @@ function print_help {
     echo "  RUN: $RUN [-r, --run], with SCREEN: $SCREEN [-s, --screen]"
     echo "  EXEC: $EXEC [-e, --exec], CONTAINER: \"$CONTAINER\" (use docker ps for the id)"
     echo "  COMMAND: \"$COMMAND\" [--cmd]"
+    echo "  EXP: \"$EXP\" [--exp]"
     echo "  DEVELOPMENT dir \"$DEVEL_DIR\" [-d, --devel]"
     echo "  LEARNING dir \"$LEARN_DIR\" [-l, --learn]"
 }
@@ -75,6 +77,9 @@ do
         ;;
         --cmd=*)
         COMMAND="${arg#*=}"
+        ;;
+        --exp=*)
+        EXP="${arg#*=}"
         ;;
         -d=*|--devel=*)
         DEVEL_DIR="${arg#*=}"
@@ -123,11 +128,17 @@ if [[ "$RUN" = true ]]; then
     if [[ $LEARN_DIR ]]; then
         MOUNT_LEARN="--mount src=$LEARN_DIR,target=/home/alice/learning,type=bind"
     fi
+    CONT_NAME=""
+    if [[ $EXP ]]; then
+        CONT_NAME="--name $EXP"
+    fi
     CURR_UID=$(id -u)
     CURR_GID=$(id -g)
     RUN_OPT="-u $CURR_UID:$CURR_GID --net=host --env DISPLAY=$DISPLAY \
-            --volume $XAUTHORITY:/home/alice/.Xauthority --volume /tmp/.X11-unix:/tmp/.X11-unix \
-            --privileged $MOUNT_DEVEL $MOUNT_LEARN --shm-size 256m $GPU_OPT \
+            --volume $XAUTHORITY:/home/alice/.Xauthority \
+            --volume /tmp/.X11-unix:/tmp/.X11-unix \
+            --privileged $MOUNT_DEVEL $MOUNT_LEARN \
+            --shm-size 256m $GPU_OPT $CONT_NAME \
             -it --rm $IMAGE_NAME:latest"
     echo "$OPTIRUN_OPT docker run $RUN_OPT $COMMAND"
 
