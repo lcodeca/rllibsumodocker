@@ -37,12 +37,13 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     tree \
     vim \
     x11-apps \
-    zlib1g-dev
+    zlib1g-dev && apt-get autoremove -y
 
 # Install Python 3 dependencies for SUMO and scripts
 RUN pip install --upgrade pip
 RUN python -m pip install \
     aiohttp \
+    deepdiff \
     dill \
     folium \
     gputil \
