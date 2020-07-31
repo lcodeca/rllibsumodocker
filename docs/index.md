@@ -11,3 +11,7 @@ the Eclipse Public License 2.0 which is available at <http://www.eclipse.org/leg
 
 The intent of this git is to provide a Docker environment for [RLLIB+SUMO Utils](https://github.com/lcodeca/rllibsumoutils).
 It is based on the [Tensorflow Docker tutorial](https://www.tensorflow.org/install/docker), and presents the same the system requrements.
+
+## HOWTOs
+
+- How to use the RLLIB SUMO Docker environment with linux [HOWTO](howto-linux.md)
