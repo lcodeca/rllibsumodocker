@@ -1,1 +1,7 @@
 test.sh
+
+setup-persuasive-devel.sh
+
+build-persuasive-devel.sh
+run-persuasive-devel.sh
+exec-persuasive-devel.sh

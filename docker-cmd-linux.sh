@@ -9,9 +9,10 @@
 # http://www.eclipse.org/legal/epl-2.0.
 
 set -e
+set -u
 
 IMAGE_NAME="tf-gpu-sumo-$(date +%Y-%m-%d)"
-IMAGE_FOLDER="docker-image"
+IMAGE_FOLDER="docker-image-linux"
 GPU=true
 GPU_OPT="--gpus all"
 OPTIRUN=false
@@ -158,7 +159,6 @@ if [[ "$RUN" = true ]]; then
         screen -d -m \
             $OPTIRUN_OPT docker run $RUN_OPT $COMMAND
     else
-        echo "Running the docker in this teminal."
         $OPTIRUN_OPT docker run $RUN_OPT $COMMAND
     fi
 else
