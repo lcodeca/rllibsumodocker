@@ -23,4 +23,4 @@ echo "Testing Tensorflow resources:"
 python tf-gpu-test.py
 
 echo "Testing RLLIB SUMO Utils example:"
-python /home/alice/libraries/rllibsumoutils/example/train.py
+python /home/alice/libraries/rllibsumoutils/example/ppotrain.py
