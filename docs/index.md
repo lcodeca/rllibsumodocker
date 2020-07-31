@@ -14,4 +14,4 @@ It is based on the [Tensorflow Docker tutorial](https://www.tensorflow.org/insta
 
 ## HOWTOs
 
-- How to use the RLLIB SUMO Docker environment with linux [HOWTO](howto-linux.md)
+- How to use the RLLIB SUMO Docker environment with linux [HOWTO](docs/howto-linux.md)
