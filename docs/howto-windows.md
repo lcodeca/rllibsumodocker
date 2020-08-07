@@ -13,7 +13,7 @@ Step by step configuration and use:
 
 3. build the docker image using the docker cmd bash script
 
-`./docker-cmd.sh -n=marl-parking-devel -b -c -r`
+`./docker-cmd-windows.sh -n=marl-parking-devel -b -c -r`
 
 4. use the following command line: to set up VcXsrv:
 
@@ -25,4 +25,4 @@ Step by step configuration and use:
 
 (of course replace "GroupID, UserID and FolderPath" accordingly
 
-`docker run -u GroupID:UserID --net=host --privileged -v /c/FolderPath/MARL-Parking/rllibsumodocker/learning:/home/alice/learning -v /c/FolderPath/MARL-Parking/rllibsumodocker/devel:/home/alice/devel -it --rm -e DISPLAY=$DISPLAY marl-parking-devel:latest /bin/bash`
+`docker run -u GroupID:UserID --net=host --privileged -v /c/FolderPath/rllibsumodocker/learning:/home/alice/learning -v /c/FolderPath/rllibsumodocker/devel:/home/alice/devel -it --rm -e DISPLAY=$DISPLAY marl-parking-devel:latest /bin/bash`
