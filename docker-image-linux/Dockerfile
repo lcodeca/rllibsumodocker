@@ -59,10 +59,10 @@ RUN python -m pip install \
     rtree \
     setproctitle \
     shapely \
-    tqdm 
+    tqdm
 
 # Install Python 3 dependencies for MARL
-RUN python -m pip install gym 
+RUN python -m pip install gym
 RUN python -m pip install ray
 RUN python -m pip install ray[debug]
 RUN python -m pip install ray[rllib]
@@ -74,9 +74,9 @@ RUN groupadd --gid ${GROUP_ID} alice && \
     echo "alice:alice" | chpasswd && adduser alice sudo
 USER alice
 
-# Download and install SUMO
+# Download and install SUMO Version v1_6_0
 WORKDIR /home/alice
-RUN git clone --depth 1 https://github.com/eclipse/sumo.git sumo
+RUN git clone --depth 1 --branch v1_6_0 https://github.com/eclipse/sumo.git sumo
 RUN mkdir -p /home/alice/sumo/build/cmake-build-release
 WORKDIR /home/alice/sumo/build/cmake-build-release
 RUN cmake -D CHECK_OPTIONAL_LIBS=true -D CMAKE_BUILD_TYPE:STRING=Release /home/alice/sumo
