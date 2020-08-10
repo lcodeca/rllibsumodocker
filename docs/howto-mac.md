@@ -4,11 +4,12 @@
 
 Basic command to use:
 
-`bash docker-cmd-mac.sh --build`
+`bash docker-cmd-mac.sh --build --uid=502 --gid=222`
 
 - The default tag name of this image is `tf-gpu-sumo-{today_date}`. You can also add option such as `--image-name={new_name}` to specify your own name;
 - The default path of the dockerfile to be used is `docker-image-mac`. You can adapt to your setting by using option `--image-folder`;
 - The default image building process does not use cache. You can enable it by adding the option `--cache`.
+- The user id and group id are suggested as 502 and 222 respectively. The range of valid values on MacOS needs to be further studied.
 
 ## Step 2: Run a container of the built image
 
@@ -46,6 +47,8 @@ Default parameters:
   DETACH: (true)                        [--detach]
   DEVELOPMENT dir ""                    [-d, --devel]
   LEARNING dir ""                       [-l, --learn]
+  USER_ID ""                            [-u, --uid]
+  GROUP_ID ""                           [-g, --gid]
 ```
 
 Example of use:

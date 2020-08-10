@@ -23,6 +23,8 @@ EXEC=false
 CONTAINER=""
 DEVEL_DIR=""
 LEARN_DIR=""
+USER_ID=""
+GROUP_ID=""
 COMMAND=""
 EXP=""
 DETACH=false
@@ -40,6 +42,8 @@ function print_help {
     echo "  DETACH: ($DETACH) [--detach]"
     echo "  DEVELOPMENT dir \"$DEVEL_DIR\" [-d, --devel]"
     echo "  LEARNING dir \"$LEARN_DIR\" [-l, --learn]"
+    echo "  USER ID \"$USER_ID\" [-u, --uid]"
+    echo "  GROUP ID \"$GROUP_ID\" [-g, --gid]"
 }
 
 for arg in "$@"
@@ -86,6 +90,12 @@ do
         -l=*|--learn=*)
         LEARN_DIR="${arg#*=}"
         ;;
+        -u=*|--uid=*)
+        USER_ID="${arg#*=}"
+        ;;
+        -g=*|--gid=*)
+        GROUP_ID="${arg#*=}"
+        ;;
         *)
         # unknown option
         echo "Unknown option \"$arg\""
@@ -105,14 +115,14 @@ if [[ "$BUILD" = true ]]; then
     if [[ "$CACHE" = true ]]; then
         echo "Building the docker container using the cache, if present."
         docker build \
-            --build-arg USER_ID=$(id -u ${USER}) \
-            --build-arg GROUP_ID=$(id -g ${USER}) \
+            --build-arg USER_ID="$USER_ID" \
+            --build-arg GROUP_ID="$GROUP_ID" \
             -t "$IMAGE_NAME" "$IMAGE_FOLDER"
     else
         echo "Building the docker container ignoring the cache, even if present."
         docker build \
-            --build-arg USER_ID=$(id -u ${USER}) \
-            --build-arg GROUP_ID=$(id -g ${USER}) \
+            --build-arg USER_ID="$USER_ID" \
+            --build-arg GROUP_ID="$GROUP_ID" \
             --no-cache -t "$IMAGE_NAME" "$IMAGE_FOLDER"
     fi
 fi

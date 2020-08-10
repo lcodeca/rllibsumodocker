@@ -69,8 +69,8 @@ RUN python -m pip install ray[rllib]
 RUN python -m pip install ray[tune]
 
 # Working user
-RUN groupadd --gid 222 alice && \
-    useradd -m -s /bin/bash -u 502 -g 222 alice && \
+RUN groupadd --gid ${GROUP_ID} alice && \
+    useradd -m -s /bin/bash -u ${USER_ID} -g ${GROUP_ID} alice && \
     echo "alice:alice" | chpasswd && adduser alice sudo
 USER alice
 
