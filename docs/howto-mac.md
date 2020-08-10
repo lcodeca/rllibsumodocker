@@ -12,7 +12,7 @@ Basic command to use:
 
 ## Step 2: Run a container of the built image
 
-`sudo bash docker-cmd-mac.sh --image-name=tf-gpu-sumo-2020-08-03 --run --no-gpu`
+`sudo bash docker-cmd-mac.sh --image-name={your_image_name} --run --no-gpu`
 
 This will run `/home/alice/learning/training.sh` inside the docker container, which will then run `/home/alice/libraries/rllibsumoutils/example/ppotrain.py`.
 
