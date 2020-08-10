@@ -28,6 +28,7 @@ LEARN_DIR=""
 COMMAND=""
 EXP=""
 DETACH=false
+SHM_SIZE="10g"
 
 function print_help {
     echo "Parameters:"
@@ -43,6 +44,7 @@ function print_help {
     echo "  DETACH: ($DETACH) [--detach]"
     echo "  DEVELOPMENT dir \"$DEVEL_DIR\" [-d, --devel]"
     echo "  LEARNING dir \"$LEARN_DIR\" [-l, --learn]"
+    echo "  SHM_SIZE \"$SHM_SIZE\" [--shm-size]"
 }
 
 for arg in "$@"
@@ -92,6 +94,9 @@ do
         ;;
         -l=*|--learn=*)
         LEARN_DIR="${arg#*=}"
+        ;;
+        --shm-size=*)
+        SHM_SIZE="${arg#*=}"
         ;;
         *)
         # unknown option
@@ -149,7 +154,7 @@ if [[ "$RUN" = true ]]; then
             --volume $XAUTHORITY:/home/alice/.Xauthority \
             --volume /tmp/.X11-unix:/tmp/.X11-unix \
             --privileged $MOUNT_DEVEL $MOUNT_LEARN \
-            --shm-size 256m $GPU_OPT $CONT_NAME \
+            --shm-size $SHM_SIZE $GPU_OPT $CONT_NAME \
             -it $DETACH --rm $IMAGE_NAME:latest"
     echo "$OPTIRUN_OPT docker run $RUN_OPT $COMMAND"
 
