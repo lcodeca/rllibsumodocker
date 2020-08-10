@@ -33,7 +33,6 @@ Default parameters:
   IMAGE name "tf-gpu-sumo-{today}"      [-n, --image-name]
   IMAGE folder "docker-image-mac"     [-f, --image-folder]
   GPU enabled (true)                    [--no-gpu]
-  OPTIRUN disabled (false)              [--with-optirun]
   BUILD: false                          [-b, --build]
         with CACHE: false               [-c, --cache]
   RUN: false                            [-r, --run]

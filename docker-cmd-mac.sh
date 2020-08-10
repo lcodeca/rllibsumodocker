@@ -15,8 +15,6 @@ IMAGE_NAME="tf-gpu-sumo-$(date +%Y-%m-%d)"
 IMAGE_FOLDER="docker-image-mac"
 GPU=true
 GPU_OPT="--gpus all"
-OPTIRUN=false
-OPTIRUN_OPT=""
 BUILD=false
 CACHE=false
 RUN=false
@@ -34,7 +32,6 @@ function print_help {
     echo "  IMAGE name \"$IMAGE_NAME\" [-n, --image-name]"
     echo "  IMAGE folder \"$IMAGE_FOLDER\" [-f, --image-folder]"
     echo "  GPU enabled ($GPU) [--no-gpu]"
-    echo "  OPTIRUN disabled ($OPTIRUN) [--with-optirun]"
     echo "  BUILD: $BUILD [-b, --build], with CACHE: $CACHE [-c, --cache]"
     echo "  RUN: $RUN [-r, --run], with SCREEN: $SCREEN [-s, --screen]"
     echo "  EXEC: $EXEC [-e, --exec], CONTAINER: \"$CONTAINER\" (use docker ps for the id)"
@@ -57,10 +54,6 @@ do
         --no-gpu)
         GPU=false
         GPU_OPT=""
-        ;;
-        --with-optirun)
-        OPTIRUN=true
-        OPTIRUN_OPT="optirun"
         ;;
         --detach)
         DETACH=true
@@ -111,13 +104,13 @@ print_help
 if [[ "$BUILD" = true ]]; then
     if [[ "$CACHE" = true ]]; then
         echo "Building the docker container using the cache, if present."
-        $OPTIRUN_OPT docker build \
+        docker build \
             --build-arg USER_ID=$(id -u ${USER}) \
             --build-arg GROUP_ID=$(id -g ${USER}) \
             -t "$IMAGE_NAME" "$IMAGE_FOLDER"
     else
         echo "Building the docker container ignoring the cache, even if present."
-        $OPTIRUN_OPT docker build \
+        docker build \
             --build-arg USER_ID=$(id -u ${USER}) \
             --build-arg GROUP_ID=$(id -g ${USER}) \
             --no-cache -t "$IMAGE_NAME" "$IMAGE_FOLDER"
@@ -150,19 +143,19 @@ if [[ "$RUN" = true ]]; then
             --privileged $MOUNT_DEVEL $MOUNT_LEARN \
             --shm-size 256m $GPU_OPT $CONT_NAME \
             -it $DETACH --rm $IMAGE_NAME:latest"
-    echo "$OPTIRUN_OPT docker run $RUN_OPT $COMMAND"
+    echo "docker run $RUN_OPT $COMMAND"
 
     ## Running docker
     if [[ "$SCREEN" = true ]]; then
         echo "Running the docker in a screen session."
         screen -d -m \
-            $OPTIRUN_OPT docker run $RUN_OPT $COMMAND
+            docker run $RUN_OPT $COMMAND
     else
-        $OPTIRUN_OPT docker run $RUN_OPT $COMMAND
+        docker run $RUN_OPT $COMMAND
     fi
 else
     if [[ "$EXEC" = true ]]; then
         echo "Attaching to a running docker (see container id using 'docker ps')."
-        $OPTIRUN_OPT docker exec -it "$CONTAINER" /bin/bash
+        docker exec -it "$CONTAINER" /bin/bash
     fi
 fi
