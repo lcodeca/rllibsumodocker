@@ -14,6 +14,8 @@ Basic command to use:
 
 `sudo bash docker-cmd-mac.sh --image-name={your_image_name} --run --no-gpu`
 
+> :warning: **Using SUDO for docker is not a good practice**: Due to a problem of user privilege between host and container, `sudo` has to be used here to make it work. We will address this security issue soon.
+
 This will run `/home/alice/learning/training.sh` inside the docker container, which will then run `/home/alice/libraries/rllibsumoutils/example/ppotrain.py`.
 
 To facilitate your development, you can add options to synchronize the code on your local system with the docker container. The mappings are as follows:
