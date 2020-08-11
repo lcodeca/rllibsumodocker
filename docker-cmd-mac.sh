@@ -151,8 +151,8 @@ if [[ "$RUN" = true ]]; then
     else
         DETACH=""
     fi
-    CURR_UID=$(id -u)
-    CURR_GID=$(id -g)
+    CURR_UID=$USER_ID
+    CURR_GID=$GROUP_ID
     RUN_OPT="-u $CURR_UID:$CURR_GID --net=host --env DISPLAY=$DISPLAY \
             --volume /tmp/.X11-unix:/tmp/.X11-unix \
             --privileged $MOUNT_DEVEL $MOUNT_LEARN \
