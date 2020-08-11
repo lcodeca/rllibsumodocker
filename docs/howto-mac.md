@@ -1,5 +1,7 @@
 # RLLIB SUMO Docker environment for MacOS
 
+### Author: Dr. Shen WANG (shen.wang@ucd.ie)
+
 ## Step 1: Build your docker image
 
 Basic command to use:
