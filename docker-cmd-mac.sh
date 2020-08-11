@@ -28,6 +28,7 @@ GROUP_ID=""
 COMMAND=""
 EXP=""
 DETACH=false
+SHM_SIZE="10g"
 
 function print_help {
     echo "Parameters:"
@@ -44,6 +45,7 @@ function print_help {
     echo "  LEARNING dir \"$LEARN_DIR\" [-l, --learn]"
     echo "  USER ID \"$USER_ID\" [-u, --uid]"
     echo "  GROUP ID \"$GROUP_ID\" [-g, --gid]"
+    echo "  SHM_SIZE \"$SHM_SIZE\" [--shm-size]"
 }
 
 for arg in "$@"
@@ -95,6 +97,9 @@ do
         ;;
         -g=*|--gid=*)
         GROUP_ID="${arg#*=}"
+        ;;
+        --shm-size=*)
+        SHM_SIZE="${arg#*=}"
         ;;
         *)
         # unknown option
@@ -151,7 +156,7 @@ if [[ "$RUN" = true ]]; then
     RUN_OPT="-u $CURR_UID:$CURR_GID --net=host --env DISPLAY=$DISPLAY \
             --volume /tmp/.X11-unix:/tmp/.X11-unix \
             --privileged $MOUNT_DEVEL $MOUNT_LEARN \
-            --shm-size 256m $GPU_OPT $CONT_NAME \
+            --shm-size $SHM_SIZE $GPU_OPT $CONT_NAME \
             -it $DETACH --rm $IMAGE_NAME:latest"
     echo "docker run $RUN_OPT $COMMAND"
 
