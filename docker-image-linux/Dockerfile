@@ -20,6 +20,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     libfox-1.6-dev \
     libgdal-dev \
     libopenmpi-dev \
+    librsvg2-bin \
     libspatialindex-dev \
     libswscale-dev \
     libtool \
@@ -40,8 +41,7 @@ RUN apt-get update && DEBIAN_FRONTEND=noninteractive apt-get -y install \
     zlib1g-dev && apt-get autoremove -y
 
 # Install Python 3 dependencies for SUMO and scripts
-RUN pip install --upgrade pip
-RUN python -m pip install \
+RUN pip install --upgrade pip && python -m pip install \
     aiohttp \
     deepdiff \
     dill \
@@ -62,11 +62,11 @@ RUN python -m pip install \
     tqdm
 
 # Install Python 3 dependencies for MARL
-RUN python -m pip install gym
-RUN python -m pip install ray
-RUN python -m pip install ray[debug]
-RUN python -m pip install ray[rllib]
-RUN python -m pip install ray[tune]
+RUN python -m pip install gym && \
+    python -m pip install ray==0.8.7 && \
+    python -m pip install ray[debug]==0.8.7 && \
+    python -m pip install ray[rllib]==0.8.7 && \
+    python -m pip install ray[tune]==0.8.7
 
 # Working user
 RUN groupadd --gid ${GROUP_ID} alice && \
@@ -74,22 +74,22 @@ RUN groupadd --gid ${GROUP_ID} alice && \
     echo "alice:alice" | chpasswd && adduser alice sudo
 USER alice
 
-# Download and install SUMO Version v1_6_0
+# Download and install SUMO Version v1_7_0
 WORKDIR /home/alice
-RUN git clone --depth 1 --branch v1_6_0 https://github.com/eclipse/sumo.git sumo
-RUN mkdir -p /home/alice/sumo/build/cmake-build-release
+RUN git clone --depth 1 --branch v1_7_0 https://github.com/eclipse/sumo.git sumo && \
+    mkdir -p /home/alice/sumo/build/cmake-build-release
 WORKDIR /home/alice/sumo/build/cmake-build-release
-RUN cmake -D CHECK_OPTIONAL_LIBS=true -D CMAKE_BUILD_TYPE:STRING=Release /home/alice/sumo
-RUN make -j$(nproc)
-RUN mkdir -p /home/alice/sumo/build/cmake-build-debug
-WORKDIR /home/alice/sumo/build/cmake-build-debug
-RUN cmake -D CHECK_OPTIONAL_LIBS=true -D CMAKE_BUILD_TYPE:STRING=Debug /home/alice/sumo
-RUN make -j$(nproc)
+RUN cmake -D CHECK_OPTIONAL_LIBS=true -D CMAKE_BUILD_TYPE:STRING=Release /home/alice/sumo && \
+    make -j$(nproc)
+# RUN mkdir -p /home/alice/sumo/build/cmake-build-debug
+# WORKDIR /home/alice/sumo/build/cmake-build-debug
+# RUN cmake -D CHECK_OPTIONAL_LIBS=true -D CMAKE_BUILD_TYPE:STRING=Debug /home/alice/sumo  && \
+#     make -j$(nproc)
 
 # Directory structure
-RUN mkdir -p /home/alice/devel
-RUN mkdir -p /home/alice/learning
-RUN mkdir -p /home/alice/libraries
+RUN mkdir -p /home/alice/devel  && \
+    mkdir -p /home/alice/learning && \
+    mkdir -p /home/alice/libraries
 
 # Download & install RLLIB+SUMO Utils
 WORKDIR /home/alice/libraries
