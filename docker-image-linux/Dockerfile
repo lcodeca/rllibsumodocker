@@ -52,6 +52,7 @@ RUN pip install --upgrade pip && python -m pip install \
     lz4 \
     matplotlib \
     numpy \
+    numpyencoder \
     opencv-python \
     pandas \
     psutil \
@@ -63,10 +64,10 @@ RUN pip install --upgrade pip && python -m pip install \
 
 # Install Python 3 dependencies for MARL
 RUN python -m pip install gym && \
-    python -m pip install ray==0.8.7 && \
-    python -m pip install ray[debug]==0.8.7 && \
-    python -m pip install ray[rllib]==0.8.7 && \
-    python -m pip install ray[tune]==0.8.7
+    python -m pip install ray==1.0.0 && \
+    python -m pip install ray[debug]==1.0.0 && \
+    python -m pip install ray[rllib]==1.0.0 && \
+    python -m pip install ray[tune]==1.0.0
 
 # Working user
 RUN groupadd --gid ${GROUP_ID} alice && \
@@ -85,6 +86,9 @@ RUN cmake -D CHECK_OPTIONAL_LIBS=true -D CMAKE_BUILD_TYPE:STRING=Release /home/a
 # WORKDIR /home/alice/sumo/build/cmake-build-debug
 # RUN cmake -D CHECK_OPTIONAL_LIBS=true -D CMAKE_BUILD_TYPE:STRING=Debug /home/alice/sumo  && \
 #     make -j$(nproc)
+RUN echo "# SUMO" >> /home/alice/.bashrc && \
+    echo "export SUMO_HOME=\"/home/alice/sumo\"" >> /home/alice/.bashrc && \
+    echo "export PATH=\"\$SUMO_HOME/bin:\$PATH\"" >> /home/alice/.bashrc
 
 # Directory structure
 RUN mkdir -p /home/alice/devel  && \
