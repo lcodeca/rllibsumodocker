@@ -24,4 +24,4 @@
 # echo "  SHM_SIZE \"$SHM_SIZE\" [--shm-size]"
 
 bash docker-cmd-linux.sh -n="rllib-devel" -f="docker-devel-image-linux" \
-    --with-optirun -b -c -r --exp="rllib-sumo-devel" --cmd="/bin/bash"
+    --with-optirun -b -r --exp="rllib-sumo-devel" --cmd="/bin/bash" $1

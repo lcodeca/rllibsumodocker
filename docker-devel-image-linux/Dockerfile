@@ -99,19 +99,16 @@ RUN echo "# SUMO" >> /home/alice/.bashrc && \
 #   https://docs.ray.io/en/latest/development.html#building-ray-full
 USER root
 RUN python3.6 -m pip install \
-    dataclasses \
-    dm-tree \
     gym \
-    lz4 \
-    opencv-python \
-    pandas \
-    pytest \
-    ray \
-    ray[debug] \
-    ray[rllib] \
-    ray[tune] \
-    tabulate
+    ray
+# RUN ray install-nightly
+# RUN python3.6 -m pip install -U https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-1.0.0-cp36-cp36m-manylinux1_x86_64.whl
 RUN python3.6 -m pip install -U https://s3-us-west-2.amazonaws.com/ray-wheels/latest/ray-1.1.0.dev0-cp36-cp36m-manylinux1_x86_64.whl
+
+RUN python3.6 -m pip install \
+    ray[rllib] \
+    ray[tune]
+
 USER alice
 WORKDIR /home/alice/libraries
 RUN git clone --depth 1 --branch sumo-gym-env https://github.com/lcodeca/ray.git ray
