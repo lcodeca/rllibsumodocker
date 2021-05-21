@@ -64,10 +64,10 @@ RUN pip install --upgrade pip && python -m pip install \
 
 # Install Python 3 dependencies for MARL
 RUN python -m pip install gym && \
-    python -m pip install ray==1.0.0 && \
-    python -m pip install ray[debug]==1.0.0 && \
-    python -m pip install ray[rllib]==1.0.0 && \
-    python -m pip install ray[tune]==1.0.0
+    python -m pip install ray==1.3.0 && \
+    python -m pip install ray[debug]==1.3.0 && \
+    python -m pip install ray[rllib]==1.3.0 && \
+    python -m pip install ray[tune]==1.3.0
 
 # Working user
 RUN groupadd --gid ${GROUP_ID} alice && \
@@ -75,9 +75,9 @@ RUN groupadd --gid ${GROUP_ID} alice && \
     echo "alice:alice" | chpasswd && adduser alice sudo
 USER alice
 
-# Download and install SUMO Version v1_7_0
+# Download and install SUMO Version v1_9_2
 WORKDIR /home/alice
-RUN git clone --depth 1 --branch v1_7_0 https://github.com/eclipse/sumo.git sumo && \
+RUN git clone --depth 1 --branch v1_9_2 https://github.com/eclipse/sumo.git sumo && \
     mkdir -p /home/alice/sumo/build/cmake-build-release
 WORKDIR /home/alice/sumo/build/cmake-build-release
 RUN cmake -D CHECK_OPTIONAL_LIBS=true -D CMAKE_BUILD_TYPE:STRING=Release /home/alice/sumo && \
