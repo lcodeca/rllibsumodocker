@@ -77,7 +77,7 @@ USER alice
 
 # Download and install SUMO Version v1_9_2
 WORKDIR /home/alice
-RUN git clone --depth 1 --branch v1_9_2 https://github.com/eclipse/sumo.git sumo && \
+RUN git clone --depth 1 --branch 1_9_2 https://github.com/eclipse/sumo.git sumo && \
     mkdir -p /home/alice/sumo/build/cmake-build-release
 WORKDIR /home/alice/sumo/build/cmake-build-release
 RUN cmake -D CHECK_OPTIONAL_LIBS=true -D CMAKE_BUILD_TYPE:STRING=Release /home/alice/sumo && \
